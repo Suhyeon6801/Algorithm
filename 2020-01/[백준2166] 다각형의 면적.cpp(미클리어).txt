@@ -1,0 +1,56 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+const int MAX = 10010;
+
+double ccw(double x1, double y1, double x2, double y2, double x3, double y3)
+{
+	return abs((x1*y2 + x2 * y3 + x3 * y1) - (x2*y1 + x3 * y2 + x1 * y3));
+}
+
+struct Point {
+	double x;
+	double y;
+};
+
+Point p[MAX];
+
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	
+	int n;
+	double x, y;
+	double sum = 0;
+	cin >> n;
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> x >> y;
+
+		p[i].x = x;
+		p[i].y = y;
+	}
+
+	//가장 첫번째로 입력받은 점이 기준
+	//이 점을 기준으로 벡터 외적
+
+	for (int i = 1; i < n -1; i++)
+	{
+		//cout << ccw(p[0].x, p[0].y, p[i].x, p[i].y, p[i + 1].x, p[i + 1].y) << endl;
+		sum += ccw(p[0].x, p[0].y, p[i].x, p[i].y, p[i + 1].x, p[i + 1].y);
+	}
+
+	if (sum < 0)	sum *= -1; 
+
+	sum /= 2.0;
+
+	cout << fixed;
+	cout.precision(1);
+
+	cout << sum << "\n";
+
+	return 0;
+}
