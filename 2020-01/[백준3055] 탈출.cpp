@@ -4,159 +4,136 @@ using namespace std;
 
 const int MAX = 60;
 char map[MAX][MAX];
-bool visited_water[MAX][MAX];
-bool visited_slikar[MAX][MAX];
 int check[MAX][MAX];
-queue <pair<int, int>> start_water;
-queue <pair<int, int>> start_slikar;
-queue <pair<int, int>> q_water;
-queue <pair<int, int>> q_slikar;
-int r, c, endY, endX;
+int r, c;
+int ex, ey;
+queue<pair<int, int>> water;
+queue<pair<int, int>> que;
 int dy[4] = { 0,1,0,-1 };
 int dx[4] = { 1,0,-1,0 };
+bool waterVisited[MAX][MAX];
+bool visited[MAX][MAX];
 
-void water_bfs()
+void waterBFS()
 {
-	while (!start_water.empty())
-	{
-		int a = start_water.front().first;
-		int b = start_water.front().second;
-		start_water.pop();
-
-		visited_water[a][b] = true;
-		q_water.push(make_pair(a, b));
-	}
-
-	int size = q_water.size();
+	/*while (!water.empty())
+	{*/
+	int size = water.size();
 	while (size--)
 	{
-		int currentY = q_water.front().first;
-		int currentX = q_water.front().second;
-		q_water.pop();
+		int y = water.front().first;
+		int x = water.front().second;
+		water.pop();
 
-		for (int i = 0; i<4; i++)
+		for (int i = 0; i < 4; i++)
 		{
-			int ny = currentY + dy[i];
-			int nx = currentX + dx[i];
+			int ny = y + dy[i];
+			int nx = x + dx[i];
 
-			if (ny<0 || nx<0 || ny >= r || nx >= c || map[ny][nx] == 'X' || map[ny][nx] == 'D')  continue;
+			if (ny < 0 || nx < 0 || ny >= r || nx >= c || map[ny][nx] == 'D' || map[ny][nx] == 'X')	continue;
 			else
 			{
-				if (!visited_water[ny][nx] && map[ny][nx] == '.')
+				if (!waterVisited[ny][nx])
 				{
-					visited_water[ny][nx] = true;
 					map[ny][nx] = '*';
-					q_water.push(make_pair(ny, nx));
+					waterVisited[ny][nx] = true;
+					water.push(make_pair(ny, nx));
 				}
 			}
 		}
 	}
+	//}
 }
 
-void slikar_bfs()
+void BFS()
 {
-	while (!start_slikar.empty())
-	{
-		int a = start_slikar.front().first;
-		int b = start_slikar.front().second;
-		start_slikar.pop();
-
-		visited_slikar[a][b] = true;
-		check[a][b] = 1;
-		q_slikar.push(make_pair(a, b));
-	}
-
-	int size = q_slikar.size();
+	//while (!que.empty())
+	//{
+	int size = que.size();
 	while (size--)
 	{
-		int currentY = q_slikar.front().first;
-		int currentX = q_slikar.front().second;
-		q_slikar.pop();
+		int y = que.front().first;
+		int x = que.front().second;
+		que.pop();
 
-		for (int i = 0; i<4; i++)
+		if (y == ey && x == ex)
 		{
-			int ny = currentY + dy[i];
-			int nx = currentX + dx[i];
+			//cout << check[y][x] << "\n";
+			break;
+		}
 
-			if (ny<0 || nx<0 || ny >= r || nx >= c || map[ny][nx] == 'X' || map[ny][nx] == '*')  continue;
-			if (ny == endY&&nx == endX)
-			{
-				check[ny][nx] = check[currentY][currentX] + 1;
-				break;
-			}
+		for (int i = 0; i < 4; i++)
+		{
+			int ny = y + dy[i];
+			int nx = x + dx[i];
+
+			if (ny < 0 || nx < 0 || ny >= r || nx >= c || map[ny][nx] == '*' || map[ny][nx] == 'X')	continue;
 			else
 			{
-				if (!visited_slikar[ny][nx] && map[ny][nx] == '.')
+				if (!visited[ny][nx])
 				{
-					visited_slikar[ny][nx] = true;
-					check[ny][nx] = check[currentY][currentX] + 1;
-					q_slikar.push(make_pair(ny, nx));
+					visited[ny][nx] = true;
+					que.push(make_pair(ny, nx));
+					check[ny][nx] = check[y][x] + 1;
 				}
 			}
 		}
 	}
+	//}
 }
 
-int main() {
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
 
 	cin >> r >> c;
-
-	for (int i = 0; i<r; i++)
+	for (int i = 0; i < r; i++)
 	{
-		for (int j = 0; j<c; j++)
+		for (int j = 0; j < c; j++)
 		{
 			cin >> map[i][j];
-
 			if (map[i][j] == 'D')
 			{
-				endY = i;
-				endX = j;
+				ey = i, ex = j;
+			}
+			else if (map[i][j] == 'S')
+			{
+				que.push(make_pair(i, j));
+				visited[i][j] = true;
+				check[i][j] = 1;
+			}
+			else if (map[i][j] == '*')
+			{
+				water.push(make_pair(i, j));
+				waterVisited[i][j] = true;
 			}
 		}
 	}
-
-	for (int i = 0; i<r; i++)
-	{
-		for (int j = 0; j<c; j++)
-		{
-			if (map[i][j] == '*')
-			{
-				start_water.push(make_pair(i, j));
-			}
-
-			if (map[i][j] == 'S')
-			{
-				start_slikar.push(make_pair(i, j));
-			}
-		}
-	}
-
-	water_bfs();
-	slikar_bfs();
 
 	while (1)
 	{
-		if (check[endY][endX] != 0)
+		waterBFS();
+		BFS();
+
+		if (check[ey][ex] != 0)
 		{
-			cout << check[endY][endX] - 1 << endl;
+			cout << check[ey][ex] - 1 << "\n";
 			break;
 		}
-		if (q_slikar.empty())
+		else if (que.empty())
 		{
-			if (check[endY][endX] != 0)
+			if (check[ey][ex] == 0)
 			{
-				cout << check[endY][endX] - 1 << endl;
+				cout << "KAKTUS\n";
 				break;
 			}
 			else
 			{
-				cout << "KAKTUS" << endl;
+				cout << check[ey][ex] - 1 << "\n";
 				break;
 			}
 		}
-
-		water_bfs();
-		slikar_bfs();
 	}
 
 	return 0;
