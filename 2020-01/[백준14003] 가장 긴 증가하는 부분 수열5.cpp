@@ -1,12 +1,12 @@
 #include <iostream>
 #include <algorithm>
-#include <stack>//¼ıÀÚ ºüÁ®³ª¿À±â
+#include <stack>//ìˆ«ì ë¹ ì ¸ë‚˜ì˜¤ê¸°
 using namespace std;
 
 const int MAX = 1000001;
 long long int arr[MAX];
-pair<int, long long> p[MAX];//LIS°¡ µÉ ¼ö ÀÖ´Â À§Ä¡, ±× ¶§ ÇØ´çÇÏ´Â °ª.
-long long int dp[MAX];//i¹øÂ° ¼ö·Î ³¡³ª´Â LIS
+pair<int, long long> p[MAX];//LISê°€ ë  ìˆ˜ ìˆëŠ” ìœ„ì¹˜, ê·¸ ë•Œ í•´ë‹¹í•˜ëŠ” ê°’.
+long long int dp[MAX];//ië²ˆì§¸ ìˆ˜ë¡œ ëë‚˜ëŠ” LIS
 
 int isSearch(int start, int end, long long target)
 {
@@ -32,7 +32,7 @@ int main()
 		cin >> arr[i];
 
 	int dpIdx = 1;
-	int idx = 2;//arrÀÇ index
+	int idx = 2;//arrì˜ index
 	dp[1] = arr[1];
 	p[1].first = 1;
 	p[1].second = arr[1];
@@ -48,7 +48,7 @@ int main()
 		}
 		else
 		{
-			int val = isSearch(1, dpIdx, arr[idx]);//index°ª
+			int val = isSearch(1, dpIdx, arr[idx]);//indexï¿½ï¿½
 			dp[val - 1] = arr[idx];
 
 			p[idx].first = val - 1;
