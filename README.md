@@ -1,3 +1,0 @@
-# Algorithm
-
-###### CUTE SUEYEON
