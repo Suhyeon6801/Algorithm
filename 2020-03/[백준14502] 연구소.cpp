@@ -13,7 +13,7 @@ int dy[4] = { 0,1,0,-1 };
 int dx[4] = { 1,0,-1,0 };
 int getMax = -1;
 
-void bfs()
+void bfs()//바이러스 퍼트리고 안전지역 검사
 {
 	memset(visit, 0, sizeof(visit));
 	memset(temp, 0, sizeof(temp));
