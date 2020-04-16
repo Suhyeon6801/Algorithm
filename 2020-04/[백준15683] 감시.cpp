@@ -35,19 +35,6 @@ int BlindSpot()
 	return cnt;
 }
 
-void printArr()
-{
-	for (int i = 0; i < N; i++)
-	{
-		for (int j = 0; j < M; j++)
-		{
-			cout << arr[i][j] << " ";
-		}
-		cout << "\n";
-	}
-	cout << "\n";
-}
-
 void dfs(int cnt)
 {
 	if (cnt == camera.size())
