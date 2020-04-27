@@ -21,19 +21,6 @@ void CopyMap()
 			arr[i][j] = map[i][j];
 }
 
-void print(int a[MAX][MAX])
-{
-	for (int i = 0; i < R; i++)
-	{
-		for (int j = 0; j < C; j++)
-		{
-			cout << map[i][j] << " ";
-		}
-		cout << "\n";
-	}
-	cout << "\n";
-}
-
 void Diffuion()//미세먼지 확산
 {
 	CopyMap();
@@ -103,26 +90,15 @@ void AirCleanerStart()//공기청정기 작동
 		{
 			for (int i = y + 1; i <R-1; i++)
 				map[i][x] = map[i+1][x];
-
-			//cout << "▼\n";
-			//print(map);
 			
 			for (int i = 0; i < C - 1; i++)
 				map[R - 1][i] = map[R - 1][i+1];
 
-			//cout << "◀\n";
-			//print(map);
-
 			for (int i = R - 1; i > y; i--)
 				map[i][C - 1] = map[i - 1][C - 1];
 
-			//cout << "▲\n";
-			//print(map);
-
 			for (int i = C - 1; i > x+1; i--)
 				map[y][i] = map[y][i - 1];
-			//cout << "▶\n";
-			//print(map);
 
 			map[y][x + 1] = 0;
 		}

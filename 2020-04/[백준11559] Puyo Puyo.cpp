@@ -9,19 +9,6 @@ int dy[4] = { 0,1,0,-1 };
 int dx[4] = { 1,0,-1,0 };
 vector<pair<int, int>> boom_pos;
 
-void print()
-{
-	for (int i = 0; i < 12; i++)
-	{
-		for (int j = 0; j < 6; j++)
-		{
-			cout << map[i][j] << " ";
-		}
-		cout << "\n";
-	}
-	cout << "\n";
-}
-
 int dfs(int y, int x, char color)
 {
 	int ret = 1;
@@ -90,9 +77,6 @@ int main()
 			map[y][x] = '.';
 		}
 
-		/*cout << "폭발\n";
-		print();*/
-
 		for (int k = 10; k >= 0; k--)
 		{
 			for (int l = 0; l < 6; l++)
@@ -113,7 +97,6 @@ int main()
 			}
 		}
 
-		//print();
 
 		if (isBoom)	cnt++;
 		else
