@@ -1,3 +1,4 @@
+//ì¶œë ¥ì´ˆê³¼ ê´€ë ¨ ë¬¸ì œ -> intë¥¼ long longìœ¼ë¡œ!
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -6,7 +7,7 @@ const int INF = 1000000000;
 const int MAX = 510;
 vector<pair<int, int>> graph[MAX];
 int N, M;
-int dist[MAX];//Ãâ¹ßÁ¤Á¡¿¡¼­ Á¤Á¡ K±îÁöÀÇ ÃÖ´Ü°Å¸®¸¦ ÀúÀåÇÏ´Â ¹è¿­
+long long dist[MAX];//ì¶œë°œì •ì ì—ì„œ ì •ì  Kê¹Œì§€ì˜ ìµœë‹¨ê±°ë¦¬ë¥¼ ì €ì¥í•˜ëŠ” ë°°ì—´
 
 int main()
 {
@@ -14,7 +15,7 @@ int main()
 	cin.tie(NULL);
 
 	cin >> N >> M;
-	for (int i = 0; i<M; i++)
+	for (int i = 0; i < M; i++)
 	{
 		int A, B, C;
 		cin >> A >> B >> C;
@@ -22,22 +23,22 @@ int main()
 	}
 
 	bool minusCycle = false;
-	fill(dist, dist + N, INF);//ÃÊ±â»óÅÂ
+	fill(dist, dist + N, INF);//ì´ˆê¸°ìƒíƒœ
 	dist[0] = 0;
-	for (int i = 0; i<N; i++)
-	{ // (N-1) + 1¹øÀÇ ·çÇÁ. ¸¶Áö¸·Àº À½ÀÇ ½ÎÀÌÅ¬ Á¸Àç ¿©ºÎ È®ÀÎ¿ë
-		for (int j = 0; j<N; j++)
+	for (int i = 0; i < N; i++)
+	{ // (N-1) + 1ë²ˆì˜ ë£¨í”„. ë§ˆì§€ë§‰ì€ ìŒì˜ ì‹¸ì´í´ ì¡´ì¬ ì—¬ë¶€ í™•ì¸ìš©
+		for (int j = 0; j < N; j++)
 		{
-			// N-1¹øÀÇ ·çÇÁ¿¡ °ÉÃÄ °¢ Á¤Á¡ÀÌ i+1°³ Á¤Á¡À» °ÅÃÄ¿À´Â ÃÖ´Ü°æ·Î °»½Å
-			for (int p = 0; p<graph[j].size(); p++)
+			// N-1ë²ˆì˜ ë£¨í”„ì— ê±¸ì³ ê° ì •ì ì´ i+1ê°œ ì •ì ì„ ê±°ì³ì˜¤ëŠ” ìµœë‹¨ê²½ë¡œ ê°±ì‹ 
+			for (int p = 0; p < graph[j].size(); p++)
 			{
-				int next = graph[j][p].first;
-				int d = graph[j][p].second;
+				long long next = graph[j][p].first;
+				long long d = graph[j][p].second;
 				if (dist[j] != INF && dist[next] > dist[j] + d)
 				{
 					dist[next] = dist[j] + d;
 
-					// N¹øÂ° ·çÇÁ¿¡ °ªÀÌ °»½ÅµÇ¸é À½ÀÇ ½ÎÀÌÅ¬ÀÌ Á¸Àç -> ÃÖ´Ü°Å¸® ±¸ÇÒ ¼ö ¾øÀ½.
+					// Në²ˆì§¸ ë£¨í”„ì— ê°’ì´ ê°±ì‹ ë˜ë©´ ìŒì˜ ì‹¸ì´í´ì´ ì¡´ì¬ -> ìµœë‹¨ê±°ë¦¬ êµ¬í•  ìˆ˜ ì—†ìŒ.
 					if (i == N - 1) minusCycle = true;
 				}
 			}
@@ -49,7 +50,7 @@ int main()
 	}
 	else
 	{
-		for (int i = 1; i <N; i++)
+		for (int i = 1; i < N; i++)
 		{
 			if (dist[i] != INF)
 				cout << dist[i] << "\n";
@@ -57,7 +58,4 @@ int main()
 				cout << "-1\n";
 		}
 	}
-
-	return 0;
 }
-
