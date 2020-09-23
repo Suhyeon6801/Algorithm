@@ -13,19 +13,6 @@ struct Fish {
 };
 Fish fish[20];
 
-void print_map()
-{
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			cout << map[i][j] << " ";
-		}
-		cout << "\n";
-	}
-	cout << "\n";
-}
-
 void change_loc(int a, int b)//물고기끼리 위치 바꾸기
 {
 	Fish temp = fish[a];
@@ -39,7 +26,6 @@ void move_fish()//물고기 이동
 {
 	for (int i = 1; i <= 16; i++)
 	{
-		//cout << i << "\n";
 		if (fish[i].isLive)
 		{
 			int y = fish[i].y;
@@ -106,7 +92,6 @@ void move_fish()//물고기 이동
 			}
 		}
 	}
-	//print_map();
 }
 
 void shark_move(int sy, int sx, int fy, int fx, int fnum, bool ate)
@@ -157,7 +142,6 @@ void dfs(int y, int x, int d, int sum)//백트래킹으로 먹을 물고기 선�
 
 			int fish_num = map[ny][nx];
 			int fish_dir = fish[fish_num].dir;
-			//cout << ny << " " << nx << " " << fish_num << " " << fish_dir << "\n";
 
 			shark_move(y, x, ny, nx, fish_num, true);//(y,x)에 있는 상어가 (ny,nx)에 있는 상어를 먹었다.
 			dfs(ny, nx, fish_dir, sum + fish_num);
