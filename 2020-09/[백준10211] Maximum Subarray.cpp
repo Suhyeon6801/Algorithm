@@ -17,7 +17,7 @@ int main()
 	while (T--)
 	{
 		memset(dp, 0, sizeof(dp));
-		int N, result = -987654321;
+		int N, result = -999;//최솟값 수정(절댓값이 1000보다 작은 수)
 		cin >> N;
 
 		for (int i = 0; i < N; i++)
